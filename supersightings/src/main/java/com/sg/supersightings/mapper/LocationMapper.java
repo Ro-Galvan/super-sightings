@@ -1,4 +1,4 @@
-package com.sg.supersightings.mappers;
+package com.sg.supersightings.mapper;
 
 import com.sg.supersightings.dto.Location;
 import org.springframework.jdbc.core.RowMapper;
