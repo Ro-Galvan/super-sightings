@@ -1,5 +1,7 @@
 package com.sg.supersightings.dto;
 
+import java.util.Objects;
+
 public class Organization {
     private int orgId;
     private String orgName;
@@ -54,5 +56,18 @@ public class Organization {
 
     public void setEvil(boolean evil) {
         isEvil = evil;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Organization that = (Organization) o;
+        return getOrgId() == that.getOrgId() && isEvil() == that.isEvil() && Objects.equals(getOrgName(), that.getOrgName()) && Objects.equals(getOrgDes(), that.getOrgDes()) && Objects.equals(getOrgAddress(), that.getOrgAddress()) && Objects.equals(getOrgNumber(), that.getOrgNumber());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getOrgId(), getOrgName(), getOrgDes(), getOrgAddress(), getOrgNumber(), isEvil());
     }
 }
