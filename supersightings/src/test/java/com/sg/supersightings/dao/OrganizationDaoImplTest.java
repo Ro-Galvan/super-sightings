@@ -62,4 +62,29 @@ class OrganizationDaoImplTest {
         assertTrue(orgs.contains(addedHero));
         assertTrue(orgs.contains(addedVillain));
     }
+
+    @Test
+    public void testUpdateOrganizationById(){
+        Organization org = new Organization();
+        org.setOrgName("test name");
+        org.setOrgDes("test des");
+        org.setOrgAddress("test address");
+        org.setOrgNumber("123-123-1234");
+        org.setEvil(false);
+        Organization addedOrg = orgDao.addOrganization(org);
+
+        Organization fetchedOrg = orgDao.getOrganizationById(addedOrg.getOrgId());
+
+        // check that the original org was not evil
+        assertFalse(fetchedOrg.isEvil());
+
+        // set org's update to be evil
+        org.setEvil(true);
+        orgDao.updateOrganization(org);
+
+        fetchedOrg = orgDao.getOrganizationById(addedOrg.getOrgId());
+
+        // check that the organization updated to be evil
+        assertTrue(fetchedOrg.isEvil());
+    }
 }
