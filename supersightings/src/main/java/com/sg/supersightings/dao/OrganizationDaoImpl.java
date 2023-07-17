@@ -63,12 +63,26 @@ public class OrganizationDaoImpl implements OrganizationDao {
 
     @Override
     public void updateOrganization(Organization org) {
-
+        final String sql = "UPDATE org SET "
+                +"orgName = ?, "
+                +"orgDes = ?, "
+                +"orgAddress = ?, "
+                +"orgNumber = ?, "
+                +"isEvil = ? "
+                +"WHERE orgID = ?";
+        jdbc.update(sql,
+                org.getOrgName(),
+                org.getOrgDes(),
+                org.getOrgAddress(),
+                org.getOrgNumber(),
+                org.isEvil(),
+                org.getOrgId());
     }
 
     @Override
     public void deleteOrganizationById(int orgId) {
-
+        final String sql = "DELETE FROM org WHERE orgID = ?";
+        jdbc.update(sql, orgId);
     }
 }
 
