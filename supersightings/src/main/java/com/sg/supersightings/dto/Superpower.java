@@ -30,13 +30,13 @@ public class Superpower {
         Superpower that = (Superpower) o;
 
         if (superpowerId != that.superpowerId) return false;
-        return superpowerName.equals(that.superpowerName);
+        return Objects.equals(superpowerName, that.superpowerName);
     }
 
     @Override
     public int hashCode() {
         int result = superpowerId;
-        result = 31 * result + superpowerName.hashCode();
+        result = 31 * result + (superpowerName != null ? superpowerName.hashCode() : 0);
         return result;
     }
 
