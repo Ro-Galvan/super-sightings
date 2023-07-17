@@ -5,8 +5,12 @@ import com.sg.supersightings.mapper.OrganizationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
 
 @Repository
@@ -36,7 +40,25 @@ public class OrganizationDaoImpl implements OrganizationDao {
 
     @Override
     public Organization addOrganization(Organization org) {
-        return null;
+        final String sql = "INSERT INTO org(orgName, orgDes, orgAddress, orgNumber, isEvil) "
+                +"VALUES(?, ?, ?, ?, ?)";
+        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+
+        jdbc.update((Connection conn ) -> {
+            PreparedStatement statement = conn.prepareStatement(
+                    sql,
+                    Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, org.getOrgName());
+            statement.setString(2, org.getOrgDes());
+            statement.setString(3, org.getOrgAddress());
+            statement.setString(4, org.getOrgNumber());
+            statement.setBoolean(5, org.isEvil());
+            return statement;
+        }, keyHolder);
+
+        org.setOrgId(keyHolder.getKey().intValue());
+
+        return org;
     }
 
     @Override
