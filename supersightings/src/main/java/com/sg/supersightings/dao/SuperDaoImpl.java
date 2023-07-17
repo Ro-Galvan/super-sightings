@@ -63,20 +63,18 @@ public class SuperDaoImpl implements SuperDao{
                 superCharacter.getSuperpowerID());
     }
 
-//    not sure if I need this still- might have to rename method if I need to update and set superpowerID (in super table to null) before deleting
-    @Override
-    public void deleteAllSuperpowersFromSuper(int superpowerId) {
-
-    }
-
-//    This may be wrong but I will keep looking for right way to handle the FK association
+//   Need to remove all superID associations from other tables before deleting super
     @Override
     @Transactional
-    public void deleteSuper(int superId) {
-        final String DELETE_SUPERPOWERIDREFERENCE = "DELETE FROM superpowers WHERE superpowerID=?";
-        jdbcTemplate.update(DELETE_SUPERPOWERIDREFERENCE, superId);
+    public void deleteSuper(int id) {
+        final String DELETE_SUPER_ORG = "DELETE FROM superOrg WHERE superID = ?";
+        jdbcTemplate.update(DELETE_SUPER_ORG, id);
+
+        final String DELETE_SIGHTING = "DELETE FROM sighting WHERE superID = ?";
+        jdbcTemplate.update(DELETE_SIGHTING, id);
 
         final String DELETE_SUPER = "DELETE FROM super WHERE superID=?";
-        jdbcTemplate.update(DELETE_SUPER, superId);
+        jdbcTemplate.update(DELETE_SUPER, id);
     }
+
 }
