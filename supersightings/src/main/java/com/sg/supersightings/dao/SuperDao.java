@@ -9,7 +9,5 @@ public interface SuperDao {
     List<Super> getAllSuperCharacters();
     Super getSuperByID(int superId);
     void updateSuper(Super superCharacter);
-//    FK association with superpower Table
-    void deleteAllSuperpowersFromSuper(int superpowerId);
-    void deleteSuper(int superId);
+    void deleteSuper(int id);
 }
