@@ -37,4 +37,29 @@ class OrganizationDaoImplTest {
 
         assertEquals(addedOrg, fetchedOrg);
     }
+
+    @Test
+    public void testGetAllOrganizations(){
+        Organization heroOrg = new Organization();
+        heroOrg.setOrgName("hero org");
+        heroOrg.setOrgDes("hero des");
+        heroOrg.setOrgAddress("hero address");
+        heroOrg.setOrgNumber("123-123-1234");
+        heroOrg.setEvil(false);
+        Organization addedHero = orgDao.addOrganization(heroOrg);
+
+        Organization villainOrg = new Organization();
+        villainOrg.setOrgName("villain org");
+        villainOrg.setOrgDes("villain des");
+        villainOrg.setOrgAddress("villain address");
+        villainOrg.setOrgNumber("321-321-4321");
+        villainOrg.setEvil(true);
+        Organization addedVillain = orgDao.addOrganization(villainOrg);
+
+        List<Organization> orgs = orgDao.getAllOrganizations();
+
+        assertEquals(2, orgs.size());
+        assertTrue(orgs.contains(addedHero));
+        assertTrue(orgs.contains(addedVillain));
+    }
 }
