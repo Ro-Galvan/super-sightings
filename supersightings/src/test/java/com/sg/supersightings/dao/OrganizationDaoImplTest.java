@@ -87,4 +87,25 @@ class OrganizationDaoImplTest {
         // check that the organization updated to be evil
         assertTrue(fetchedOrg.isEvil());
     }
+
+    @Test
+    public void testDeleteOrganizationById(){
+        Organization org = new Organization();
+        org.setOrgName("test name");
+        org.setOrgDes("test des");
+        org.setOrgAddress("test address");
+        org.setOrgNumber("123-123-1234");
+        org.setEvil(false);
+        Organization addedOrg = orgDao.addOrganization(org);
+
+        List<Organization> orgs = orgDao.getAllOrganizations();
+
+        assertEquals(1, orgs.size());
+
+        orgDao.deleteOrganizationById(addedOrg.getOrgId());
+
+        orgs = orgDao.getAllOrganizations();
+
+        assertEquals(0, orgs.size());
+    }
 }
