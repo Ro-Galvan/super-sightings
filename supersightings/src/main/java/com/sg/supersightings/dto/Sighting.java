@@ -6,6 +6,8 @@ import java.util.Objects;
 public class Sighting {
     private int sightingID;
     private LocalDateTime dateSighted;
+    private Location location;
+    private Super character;
 
     public int getSightingID() {
         return sightingID;
@@ -23,11 +25,29 @@ public class Sighting {
         this.dateSighted = dateSighted;
     }
 
+    public Location getLocation() {
+        return location;
+    }
+
+    public Super getCharacter() {
+        return character;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public void setCharacter(Super character) {
+        this.character = character;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 59 * hash + this.sightingID;
-        hash = 59 * hash + Objects.hashCode(this.dateSighted);
+        hash = 31 * hash + this.sightingID;
+        hash = 31 * hash + Objects.hashCode(this.dateSighted);
+        hash = 31 * hash + Objects.hashCode(this.location);
+        hash = 31 * hash + Objects.hashCode(this.character);
         return hash;
     }
 
@@ -46,15 +66,21 @@ public class Sighting {
         if (this.sightingID != other.sightingID) {
             return false;
         }
-        return Objects.equals(this.dateSighted, other.dateSighted);
+        if (!Objects.equals(this.dateSighted, other.dateSighted)) {
+            return false;
+        }
+        if (!Objects.equals(this.location, other.location)) {
+            return false;
+        }
+        return Objects.equals(this.character, other.character);
     }
 
     @Override
     public String toString() {
-        return "Sighting{" + "sightingID=" + sightingID + ", dateSighted=" + dateSighted + '}';
+        return "Sighting{" + "sightingID=" + sightingID + ", dateSighted=" + dateSighted + ", location=" + location + ", character=" + character + '}';
     }
-
-   
+    
+    
     
     
 }
