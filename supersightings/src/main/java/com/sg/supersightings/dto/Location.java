@@ -1,5 +1,7 @@
 package com.sg.supersightings.dto;
 
+import java.util.Objects;
+
 public class Location {
     private int locationID;
     private String locationName;
@@ -64,21 +66,24 @@ public class Location {
         Location location = (Location) o;
 
         if (locationID != location.locationID) return false;
-        if (!locationName.equals(location.locationName)) return false;
-        if (!locationDesc.equals(location.locationDesc)) return false;
-        if (!locationAddress.equals(location.locationAddress)) return false;
-        if (!latitude.equals(location.latitude)) return false;
-        return longitude.equals(location.longitude);
+        if (!Objects.equals(locationName, location.locationName))
+            return false;
+        if (!Objects.equals(locationDesc, location.locationDesc))
+            return false;
+        if (!Objects.equals(locationAddress, location.locationAddress))
+            return false;
+        if (!Objects.equals(latitude, location.latitude)) return false;
+        return Objects.equals(longitude, location.longitude);
     }
 
     @Override
     public int hashCode() {
         int result = locationID;
-        result = 31 * result + locationName.hashCode();
-        result = 31 * result + locationDesc.hashCode();
-        result = 31 * result + locationAddress.hashCode();
-        result = 31 * result + latitude.hashCode();
-        result = 31 * result + longitude.hashCode();
+        result = 31 * result + (locationName != null ? locationName.hashCode() : 0);
+        result = 31 * result + (locationDesc != null ? locationDesc.hashCode() : 0);
+        result = 31 * result + (locationAddress != null ? locationAddress.hashCode() : 0);
+        result = 31 * result + (latitude != null ? latitude.hashCode() : 0);
+        result = 31 * result + (longitude != null ? longitude.hashCode() : 0);
         return result;
     }
 }
