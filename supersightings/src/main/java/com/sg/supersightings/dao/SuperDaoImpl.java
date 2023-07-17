@@ -1,4 +1,82 @@
 package com.sg.supersightings.dao;
 
-public class SuperDaoImpl {
+import com.sg.supersightings.dto.Super;
+import com.sg.supersightings.mapper.SuperMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Repository
+public class SuperDaoImpl implements SuperDao{
+
+    private final JdbcTemplate jdbcTemplate;
+    @Autowired
+    public SuperDaoImpl(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public Super createSuper(Super superCharacter) {
+        final String INSERT_SUPER = "INSERT INTO super(superName, superDesc, isEvil, superpowerID) VALUES(?,?,?,?)";
+        jdbcTemplate.update(INSERT_SUPER,
+                superCharacter.getSuperName(),
+                superCharacter.getSuperDescription(),
+                superCharacter.getEvil(),
+                superCharacter.getSuperpowerID());
+
+        // Retrieve the last inserted ID
+        String selectLastIdQuery = "SELECT LAST_INSERT_ID()";
+        int id = jdbcTemplate.queryForObject(selectLastIdQuery, Integer.class);
+
+        // Set the game ID
+        superCharacter.setSuperID(id);
+        return superCharacter;
+    }
+
+    @Override
+    public List<Super> getAllSuperCharacters() {
+        final String SQL = "SELECT * FROM super";
+        return jdbcTemplate.query(SQL, new SuperMapper());
+    }
+
+    @Override
+    public Super getSuperByID(int superId) {
+        try {
+            final String SQL = "SELECT * FROM super WHERE superID = ?";
+            return jdbcTemplate.queryForObject(SQL, new SuperMapper(), superId);
+        } catch(DataAccessException ex) {
+            return null;
+        }
+    }
+
+    @Override
+    public void updateSuper(Super superCharacter) {
+        final String SQL = "UPDATE super SET superName = ?, superDesc = ?, isEvil = ?, superpowerID = ? WHERE superID = ?";
+        jdbcTemplate.update(SQL,
+                superCharacter.getSuperName(),
+                superCharacter.getSuperDescription(),
+                superCharacter.getEvil(),
+                superCharacter.getSuperpowerID());
+    }
+
+//    not sure if I need this still- might have to rename method if I need to update and set superpowerID (in super table to null) before deleting
+    @Override
+    public void deleteAllSuperpowersFromSuper(int superpowerId) {
+
+    }
+
+//    This may be wrong but I will keep looking for right way to handle the FK association
+    @Override
+    @Transactional
+    public void deleteSuper(int superId) {
+        final String DELETE_SUPERPOWERIDREFERENCE = "DELETE FROM superpowers WHERE superpowerID=?";
+        jdbcTemplate.update(DELETE_SUPERPOWERIDREFERENCE, superId);
+
+        final String DELETE_SUPER = "DELETE FROM super WHERE superID=?";
+        jdbcTemplate.update(DELETE_SUPER, superId);
+    }
 }
