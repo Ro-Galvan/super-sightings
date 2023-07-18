@@ -17,7 +17,7 @@ public class SuperMapper implements RowMapper<Super> {
         mapperSuper.setSuperName(rs.getString("superName"));
         mapperSuper.setSuperDescription(rs.getString("superDesc"));
         mapperSuper.setEvil(rs.getBoolean("isEvil"));
-        mapperSuper.setSuperID(rs.getInt("superpowerID"));
+        mapperSuper.setSuperpowerID(rs.getInt("superpowerID"));
         return mapperSuper;
     }
 }

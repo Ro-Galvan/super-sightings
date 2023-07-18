@@ -32,7 +32,7 @@ public class SuperDaoImpl implements SuperDao{
         String selectLastIdQuery = "SELECT LAST_INSERT_ID()";
         int id = jdbcTemplate.queryForObject(selectLastIdQuery, Integer.class);
 
-        // Set the game ID
+        // Set the Super ID
         superCharacter.setSuperID(id);
         return superCharacter;
     }
