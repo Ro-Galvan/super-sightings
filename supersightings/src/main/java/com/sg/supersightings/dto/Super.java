@@ -73,4 +73,15 @@ public class Super {
         result = 31 * result + superpowerID;
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Super{" +
+                "superID=" + superID +
+                ", superName='" + superName + '\'' +
+                ", superDescription='" + superDescription + '\'' +
+                ", isEvil=" + isEvil +
+                ", superpowerID=" + superpowerID +
+                '}';
+    }
 }
