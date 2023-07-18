@@ -38,6 +38,7 @@ class OrganizationDaoImplTest {
         assertEquals(addedOrg, fetchedOrg);
     }
 
+
     @Test
     public void testGetAllOrganizations(){
         Organization heroOrg = new Organization();
